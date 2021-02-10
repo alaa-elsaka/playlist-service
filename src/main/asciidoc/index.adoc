@@ -1,0 +1,8 @@
+Get All Playlists
+
+.request
+include::{snippets}/AddPlaylist/http-request.adoc[]
+
+.response
+include::{snippets}/AddPlaylist/http-response.adoc[]
+
