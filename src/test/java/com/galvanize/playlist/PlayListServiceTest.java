@@ -1,5 +1,6 @@
 package com.galvanize.playlist;
 
+import com.galvanize.playlist.DBUitil.PlayListExistException;
 import com.galvanize.playlist.model.PlayList;
 import com.galvanize.playlist.repositories.PlayListRepository;
 import com.galvanize.playlist.sevices.PlayListService;
@@ -9,9 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.Mock;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PlayListServiceTest {
@@ -34,4 +35,26 @@ public class PlayListServiceTest {
         assertTrue(actual.getName().equals(playlist.getName()));
 
     }
+
+    @Test
+    public void addNewPlayAlreadyExist() {
+
+        PlayList playlist = new PlayList("myPlayList");
+//
+//        when(playListRepository.save(any(PlayList.class)))
+//                .thenThrow(new PlayListExistException("Playlist with this name already exist"));
+
+        when(playListRepository.findByName(playlist.getName()))
+                .thenThrow(new PlayListExistException("Playlist with this name already exist"));
+
+        PlayListExistException exception =
+                assertThrows(PlayListExistException.class, ()->{
+                    playListService.add(playlist);
+                });
+
+        assertEquals("Playlist with this name already exist", exception.getMessage());
+        verify(playListRepository,times(1)).findByName("spiritual");
+
+    }
+
 }
