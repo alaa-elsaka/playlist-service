@@ -37,3 +37,11 @@ __*
 .request
 include::{snippets}/AddSongToPlaylist/http-request.adoc[]
 
+
+
+*__When Removing a song to a playlist
+__*
+
+.request
+include::{snippets}/AddSongToPlaylist/http-request.adoc[]
+

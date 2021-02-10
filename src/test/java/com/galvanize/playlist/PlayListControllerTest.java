@@ -142,11 +142,27 @@ public class PlayListControllerTest {
                         parameterWithName("songName").description("song name")
                         )
                         ));
-//                .andDo(document("AddSongToPlaylist", responseFields(
-//                        fieldWithPath("name").description("The name of the playlist"),
-//                        fieldWithPath("id").ignored()
-//                )));
-
     }
 
+    @Test
+    public void whenRemoveSongToPlaylist() throws Exception {
+        PlayList playList = new PlayList("playlist 1");
+        Song song = new Song("A song");
+        Song song1 = new Song("Another song");
+        mockMvc
+                .perform(post("/playlist/"+playList.getName()+"/"+song.getName()))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.songs[0].name").value("A song"));
+
+        mockMvc
+                .perform(RestDocumentationRequestBuilders.post("/playlist/{playlistName}/{songName}"
+                        ,"playlist 1", "Another song" ))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.songs[1].name").value("Another song"))
+                .andDo(document("AddSongToPlaylist", RequestDocumentation.pathParameters(
+                        parameterWithName("playlistName").description("Playlist name"),
+                        parameterWithName("songName").description("song name")
+                        )
+                ));
+    }
 }
