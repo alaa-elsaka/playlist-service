@@ -19,6 +19,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -128,12 +129,12 @@ public class PlayListControllerTest {
         Song song = new Song("A song");
         Song song1 = new Song("Another song");
         mockMvc
-                .perform(post("/playlist/"+playList.getName()+"/"+song.getName()))
+                .perform(post("/playlist/add/"+playList.getName()+"/"+song.getName()))
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.songs[0].name").value("A song"));
 
         mockMvc
-                .perform(RestDocumentationRequestBuilders.post("/playlist/{playlistName}/{songName}"
+                .perform(RestDocumentationRequestBuilders.post("/playlist/add/{playlistName}/{songName}"
                 ,"playlist 1", "Another song" ))
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.songs[1].name").value("Another song"))
@@ -145,23 +146,66 @@ public class PlayListControllerTest {
     }
 
     @Test
-    public void whenRemoveSongToPlaylist() throws Exception {
+    public void whenRemoveSongFromPlaylist() throws Exception {
         PlayList playList = new PlayList("playlist 1");
         Song song = new Song("A song");
         Song song1 = new Song("Another song");
         mockMvc
-                .perform(post("/playlist/"+playList.getName()+"/"+song.getName()))
+                .perform(post("/playlist/add/"+playList.getName()+"/"+song.getName()))
                 .andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.songs[0].name").value("A song"));
+                .andExpect(jsonPath("$.songs[0].name").value("A song"))
+                .andExpect(jsonPath("$.songs",hasSize(1)));
 
         mockMvc
-                .perform(RestDocumentationRequestBuilders.post("/playlist/{playlistName}/{songName}"
+                .perform(RestDocumentationRequestBuilders.post("/playlist/add/{playlistName}/{songName}"
                         ,"playlist 1", "Another song" ))
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.songs[1].name").value("Another song"))
-                .andDo(document("AddSongToPlaylist", RequestDocumentation.pathParameters(
+                .andExpect(jsonPath("$.songs.length()").value(2));
+               // .andExpect(jsonPath("$.orders.length()",hasSize(2)));
+
+
+        mockMvc
+                .perform(RestDocumentationRequestBuilders.post("/playlist/remove/{playlistName}/{songName}"
+                        ,"playlist 1", "Another song" ))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.songs.length()").value(2))
+                .andDo(document("RemoveSongFromPlaylist", RequestDocumentation.pathParameters(
                         parameterWithName("playlistName").description("Playlist name"),
                         parameterWithName("songName").description("song name")
+                        )
+                ));
+
+
+
+    }
+
+    @Test
+    public void whenGetAllSongsFromPlayList() throws Exception {
+        PlayList playList = new PlayList("playlist 1");
+        Song song = new Song("A song");
+        Song song1 = new Song("Another song");
+        mockMvc
+                .perform(post("/playlist/add/"+playList.getName()+"/"+song.getName()))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.songs[0].name").value("A song"))
+                .andExpect(jsonPath("$.songs",hasSize(1)));
+
+        mockMvc
+                .perform(RestDocumentationRequestBuilders.post("/playlist/add/{playlistName}/{songName}"
+                        ,"playlist 1", "Another song" ))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.songs[1].name").value("Another song"))
+                .andExpect(jsonPath("$.songs",hasSize(2)));
+
+
+        mockMvc
+                .perform(RestDocumentationRequestBuilders.get("/playlist/{playlistName}/"
+                        ,"playlist 1" ))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.[0].name").value("A song"))
+                .andDo(document("GetAllSongInPlaylist", RequestDocumentation.pathParameters(
+                        parameterWithName("playlistName").description("Playlist name")
                         )
                 ));
     }

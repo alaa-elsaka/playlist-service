@@ -8,6 +8,8 @@ import com.galvanize.playlist.repositories.PlayListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlayListService {
 
@@ -36,6 +38,23 @@ public class PlayListService {
         playList.getSongs().add(song);
 
         return repository.save(playList);
+
+    }
+
+    public PlayList removeSongFromPlaylist(String playlistName, String songName) {
+        PlayList playList = repository.findByName(playlistName);
+        Song song = new Song(songName);
+
+        playList.getSongs().remove(song);
+        repository.saveAndFlush(playList);
+        return playList;
+    }
+
+
+    public List<Song> getAllSongs(String playlistName) {
+
+        PlayList playList = repository.findByName(playlistName);
+        return playList.getSongs();
 
     }
 }

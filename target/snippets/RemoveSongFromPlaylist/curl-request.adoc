@@ -1,0 +1,4 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/playlist/remove/playlist%201/Another%20song' -i -X POST
+----

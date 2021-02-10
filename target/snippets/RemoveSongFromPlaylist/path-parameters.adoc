@@ -1,4 +1,4 @@
-.+/playlist/add/{playlistName}/{songName}+
+.+/playlist/remove/{playlistName}/{songName}+
 |===
 |Parameter|Description
 

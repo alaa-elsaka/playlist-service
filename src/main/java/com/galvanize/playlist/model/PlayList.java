@@ -17,7 +17,7 @@ public class PlayList {
     private Long id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE,CascadeType.REFRESH})
     private List<Song> songs;
 
     public PlayList(String name){

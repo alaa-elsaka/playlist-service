@@ -1,4 +1,4 @@
 [source,bash]
 ----
-$ http POST 'http://localhost:8080/playlist/playlist%201/Another%20song'
+$ http POST 'http://localhost:8080/playlist/add/playlist%201/Another%20song'
 ----

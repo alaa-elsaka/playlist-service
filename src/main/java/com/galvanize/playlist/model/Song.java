@@ -1,6 +1,7 @@
 package com.galvanize.playlist.model;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 @EqualsAndHashCode
+@ToString
 public class Song {
 
     @Id

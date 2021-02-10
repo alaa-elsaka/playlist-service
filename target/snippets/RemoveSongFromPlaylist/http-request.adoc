@@ -1,6 +1,6 @@
 [source,http,options="nowrap"]
 ----
-POST /playlist/add/playlist%201/Another%20song HTTP/1.1
+POST /playlist/remove/playlist%201/Another%20song HTTP/1.1
 Host: localhost:8080
 
 ----

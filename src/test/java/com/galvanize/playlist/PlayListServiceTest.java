@@ -12,6 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.Mock;
 
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -92,5 +95,58 @@ public class PlayListServiceTest {
     }
 
 
+
+    @Test
+    public void whenRemoveSongFromPlayList()
+    {
+        PlayList playList = new PlayList("myPlaylist");
+
+        when(playListRepository.findByName("myPlaylist")).thenReturn(playList);
+        when(playListRepository.save(playList)).thenReturn(playList);
+
+        Song song = new Song("mySong");
+        Song song2 = new Song("Song2");
+
+        PlayList actual = playListService.addSongToPlaylist(playList.getName(), song.getName());
+
+        assertEquals("mySong", actual.getSongs().get(0).getName());
+
+
+
+        actual = playListService.addSongToPlaylist(playList.getName(), song2.getName());
+
+        assertEquals("Song2", actual.getSongs().get(1).getName());
+
+        actual = playListService.removeSongFromPlaylist(playList.getName(), song.getName());
+        assertEquals("Song2", actual.getSongs().get(0).getName());
+        assertEquals(1, actual.getSongs().size());
+    }
+
+    @Test
+    public void getAllSongsPerPlaylist(){
+
+        PlayList playList = new PlayList("myPlaylist");
+
+        when(playListRepository.findByName("myPlaylist")).thenReturn(playList);
+        when(playListRepository.save(playList)).thenReturn(playList);
+
+        Song song = new Song("song1");
+        Song song2 = new Song("song2");
+
+        PlayList actual = playListService.addSongToPlaylist(playList.getName(), song.getName());
+        actual = playListService.addSongToPlaylist(playList.getName(), song2.getName());
+
+        PlayList list = new PlayList("myList");
+
+        List<Song> songs = List.of(
+                new Song("song1"),
+                new Song("song2")
+        );
+
+        assertEquals(actual.getSongs(), songs);
+
+
+
+    }
 
 }

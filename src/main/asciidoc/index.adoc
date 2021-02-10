@@ -45,3 +45,13 @@ __*
 .request
 include::{snippets}/AddSongToPlaylist/http-request.adoc[]
 
+
+
+
+
+*__Get Songs in a playlist
+__*
+
+.request
+include::{snippets}/GetAllSongInPlaylist/http-request.adoc[]
+
