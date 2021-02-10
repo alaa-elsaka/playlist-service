@@ -83,7 +83,7 @@ public class PlayListControllerTest {
 
     @Test
     public void whenCreateAnewPlayListAlreadyExist() throws Exception {
-        PlayList playList = new PlayList("playlist 2777");
+        PlayList playList = new PlayList("playlist 2");
 
         mockMvc
                 .perform(post("/add").contentType(MediaType.APPLICATION_JSON)

@@ -1,8 +1,15 @@
-Get All Playlists
+= Get All Playlists
 
 .request
 include::{snippets}/AddPlaylist/http-request.adoc[]
 
 .response
 include::{snippets}/AddPlaylist/http-response.adoc[]
+
+
+= When adding a new playlist with a name already exist
+
+
+.request
+include::{snippets}/AddPlaylist-alreadyExist/http-request.adoc[]
 
