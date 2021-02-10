@@ -1,4 +1,6 @@
-= Get All Playlists
+*__Get All Playlists
+__*
+
 
 .request
 include::{snippets}/AddPlaylist/http-request.adoc[]
@@ -7,7 +9,9 @@ include::{snippets}/AddPlaylist/http-request.adoc[]
 include::{snippets}/AddPlaylist/http-response.adoc[]
 
 
-= When adding a new playlist with a name already exist
+
+*__When adding a new playlist with a name already exist
+__*
 
 
 .request
@@ -16,9 +20,20 @@ include::{snippets}/AddPlaylist-alreadyExist/http-request.adoc[]
 
 
 
-= When adding a new playlist with a No Name
+*__When adding a new playlist with a No Name
+__*
 
 
 .request
 include::{snippets}/AddPlaylist-NoName/http-request.adoc[]
+
+
+
+
+
+*__When adding a song to a playlist
+__*
+
+.request
+include::{snippets}/AddSongToPlaylist/http-request.adoc[]
 

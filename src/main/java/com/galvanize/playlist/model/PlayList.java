@@ -2,10 +2,9 @@ package com.galvanize.playlist.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @ToString
@@ -18,8 +17,12 @@ public class PlayList {
     private Long id;
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Song> songs;
+
     public PlayList(String name){
         this.name = name;
+        this.songs = new ArrayList<>();
     }
 
     public Long getId() {
@@ -32,5 +35,9 @@ public class PlayList {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
     }
 }

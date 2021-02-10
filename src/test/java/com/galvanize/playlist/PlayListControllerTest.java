@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galvanize.playlist.DBUitil.PlayListExistException;
 import com.galvanize.playlist.DBUitil.PlayListNameException;
 import com.galvanize.playlist.model.PlayList;
+import com.galvanize.playlist.model.Song;
 import com.galvanize.playlist.repositories.PlayListRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -117,6 +120,32 @@ public class PlayListControllerTest {
                         fieldWithPath("name").ignored(),
                         fieldWithPath("id").ignored()
                 )));
+
+    }
+    @Test
+    public void whenAddSongToPlaylist() throws Exception {
+        PlayList playList = new PlayList("playlist 1");
+        Song song = new Song("A song");
+        Song song1 = new Song("Another song");
+        mockMvc
+                .perform(post("/playlist/"+playList.getName()+"/"+song.getName()))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.songs[0].name").value("A song"));
+
+        mockMvc
+                .perform(RestDocumentationRequestBuilders.post("/playlist/{playlistName}/{songName}"
+                ,"playlist 1", "Another song" ))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.songs[1].name").value("Another song"))
+                .andDo(document("AddSongToPlaylist", RequestDocumentation.pathParameters(
+                        parameterWithName("playlistName").description("Playlist name"),
+                        parameterWithName("songName").description("song name")
+                        )
+                        ));
+//                .andDo(document("AddSongToPlaylist", responseFields(
+//                        fieldWithPath("name").description("The name of the playlist"),
+//                        fieldWithPath("id").ignored()
+//                )));
 
     }
 

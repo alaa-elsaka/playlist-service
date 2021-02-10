@@ -4,10 +4,7 @@ package com.galvanize.playlist.controllers;
 import com.galvanize.playlist.model.PlayList;
 import com.galvanize.playlist.sevices.PlayListService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PlayListController {
@@ -26,6 +23,13 @@ public class PlayListController {
         return playListService.add(playList);
 
 
+    }
+
+    @PostMapping("playlist/{playlistName}/{songName}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public PlayList addSongToPlaylist(@PathVariable String playlistName, @PathVariable String songName){
+
+        return playListService.addSongToPlaylist(playlistName, songName);
     }
 
 }

@@ -1,0 +1,11 @@
+.+/playlist/{playlistName}/{songName}+
+|===
+|Parameter|Description
+
+|`+playlistName+`
+|Playlist name
+
+|`+songName+`
+|song name
+
+|===

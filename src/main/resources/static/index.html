@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>Get All Playlists</title>
+<title>Untitled</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -427,11 +427,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>Get All Playlists</h1>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
+<div class="paragraph">
+<p><strong><em>Get All Playlists
+</em></strong></p>
+</div>
 <div class="listingblock">
 <div class="title">request</div>
 <div class="content">
@@ -453,9 +454,10 @@ Content-Length: 33
 {"id":1,"name":"First Play List"}</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong><em>When adding a new playlist with a name already exist
+</em></strong></p>
 </div>
-</div>
-<h1 id="_when_adding_a_new_playlist_with_a_name_already_exist" class="sect0">When adding a new playlist with a name already exist</h1>
 <div class="listingblock">
 <div class="title">request</div>
 <div class="content">
@@ -467,7 +469,10 @@ Host: localhost:8080
 {"id":null,"name":"playlist 2"}</code></pre>
 </div>
 </div>
-<h1 id="_when_adding_a_new_playlist_with_a_no_name" class="sect0">When adding a new playlist with a No Name</h1>
+<div class="paragraph">
+<p><strong><em>When adding a new playlist with a No Name
+</em></strong></p>
+</div>
 <div class="listingblock">
 <div class="title">request</div>
 <div class="content">
@@ -479,10 +484,21 @@ Host: localhost:8080
 {"id":null,"name":null}</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong><em>When adding a song to a playlist
+</em></strong></p>
+</div>
+<div class="listingblock">
+<div class="title">request</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /playlist/playlist%201/Another%20song HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-10 13:22:04 CST
+Last updated 2021-02-10 15:06:54 CST
 </div>
 </div>
 </body>

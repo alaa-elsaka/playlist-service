@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 202 Accepted
+Content-Type: application/json
+Content-Length: 80
+
+{"id":1,"name":"playlist 1","songs":[{"name":"A song"},{"name":"Another song"}]}
+----

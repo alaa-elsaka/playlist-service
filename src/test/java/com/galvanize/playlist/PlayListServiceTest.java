@@ -3,6 +3,7 @@ package com.galvanize.playlist;
 import com.galvanize.playlist.DBUitil.PlayListExistException;
 import com.galvanize.playlist.DBUitil.PlayListNameException;
 import com.galvanize.playlist.model.PlayList;
+import com.galvanize.playlist.model.Song;
 import com.galvanize.playlist.repositories.PlayListRepository;
 import com.galvanize.playlist.sevices.PlayListService;
 import org.junit.jupiter.api.Test;
@@ -72,6 +73,22 @@ public class PlayListServiceTest {
 
         assertEquals("Playlist Name Required!", exception.getMessage());
 
+    }
+
+    @Test
+    public void whenAddSongToPlayList()
+    {
+        PlayList playList = new PlayList("myPlaylist");
+
+        when(playListRepository.findByName("myPlaylist")).thenReturn(playList);
+        when(playListRepository.save(playList)).thenReturn(playList);
+
+        Song song = new Song("mySong");
+
+
+        PlayList actual = playListService.addSongToPlaylist(playList.getName(), song.getName());
+
+        assertEquals("mySong", actual.getSongs().get(0).getName());
     }
 
 
