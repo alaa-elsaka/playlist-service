@@ -4,6 +4,7 @@ package com.galvanize.playlist;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galvanize.playlist.DBUitil.PlayListExistException;
+import com.galvanize.playlist.DBUitil.PlayListNameException;
 import com.galvanize.playlist.model.PlayList;
 import com.galvanize.playlist.repositories.PlayListRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -95,6 +96,25 @@ public class PlayListControllerTest {
                         result.getResolvedException().getMessage()))
                 .andDo(document("AddPlaylist-alreadyExist", requestFields(
                         fieldWithPath("name").description("The name of the playlist"),
+                        fieldWithPath("id").ignored()
+                )));
+
+    }
+
+    @Test
+    public void whenCreateAnewPlayListNoName() throws Exception {
+        PlayList playList = new PlayList();
+
+        mockMvc
+                .perform(post("/add").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(playList)))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException()
+                        instanceof PlayListNameException))
+                .andExpect(result -> assertEquals("Playlist Name Required!",
+                        result.getResolvedException().getMessage()))
+                .andDo(document("AddPlaylist-NoName", requestFields(
+                        fieldWithPath("name").ignored(),
                         fieldWithPath("id").ignored()
                 )));
 

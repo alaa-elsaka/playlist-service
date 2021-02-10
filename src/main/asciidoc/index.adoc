@@ -13,3 +13,12 @@ include::{snippets}/AddPlaylist/http-response.adoc[]
 .request
 include::{snippets}/AddPlaylist-alreadyExist/http-request.adoc[]
 
+
+
+
+= When adding a new playlist with a No Name
+
+
+.request
+include::{snippets}/AddPlaylist-NoName/http-request.adoc[]
+

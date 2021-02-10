@@ -1,6 +1,7 @@
 package com.galvanize.playlist;
 
 import com.galvanize.playlist.DBUitil.PlayListExistException;
+import com.galvanize.playlist.DBUitil.PlayListNameException;
 import com.galvanize.playlist.model.PlayList;
 import com.galvanize.playlist.repositories.PlayListRepository;
 import com.galvanize.playlist.sevices.PlayListService;
@@ -40,9 +41,6 @@ public class PlayListServiceTest {
     public void addNewPlayAlreadyExist() {
 
         PlayList playlist = new PlayList("myPlayList");
-//
-//        when(playListRepository.save(any(PlayList.class)))
-//                .thenThrow(new PlayListExistException("Playlist with this name already exist"));
 
         when(playListRepository.findByName(playlist.getName()))
                 .thenThrow(new PlayListExistException("Playlist with this name already exist"));
@@ -53,8 +51,29 @@ public class PlayListServiceTest {
                 });
 
         assertEquals("Playlist with this name already exist", exception.getMessage());
-        verify(playListRepository,times(1)).findByName("spiritual");
+        verify(playListRepository,times(1)).findByName(playlist.getName());
 
     }
+
+
+
+    @Test
+    public void createPlaylistWithNoName() {
+
+        PlayList playlist = new PlayList();
+
+//        when(playListRepository.findByName(playlist.getName()))
+//                .thenReturn(playlist);
+
+        PlayListNameException exception =
+                assertThrows(PlayListNameException.class, ()->{
+                    playListService.add(playlist);
+                });
+
+        assertEquals("Playlist Name Required!", exception.getMessage());
+
+    }
+
+
 
 }
